@@ -8,12 +8,12 @@ It's a folder of plain HTML, CSS and JavaScript that you open from your computer
 
 ## What you need
 
-- A web browser: Safari or Chrome (Edge and Firefox work too).
+- A web browser: Safari or Chrome (the browsers it's tested in).
 - Optional: a Claude API key from Anthropic, for AI planning.
 
 ## Set it up
 
-1. Get the files: **fork** this repository and clone it, or click **Code → Download ZIP** and unzip it somewhere you'll keep it (not your Downloads folder).
+1. Get the files: click **Code → Download ZIP** and unzip it somewhere you'll keep it (not your Downloads folder), or clone the repository.
 2. Optional, for Claude:
    1. Get a key by following [Anthropic's guide](https://platform.claude.com/docs/en/get-api-key). The Claude Console shows a key only once, so paste it in right away.
    2. In the `app` folder, copy `config.example.js` and name the copy `config.js`.
@@ -33,12 +33,12 @@ If `app/config.js` is missing, has a mistake in it, or has a key Claude turns do
 
 1. In the app, **download your data file** first.
 2. Keep your `app/config.js` (copy it somewhere safe if you're replacing the folder).
-3. Get the new version: sync your fork and pull, or download the new ZIP and replace the old folder.
+3. Get the new version: `git pull` if you cloned it, or download the new ZIP and replace the old folder.
 4. Put `app/config.js` back in the new `app` folder and open **`Eat At Home.html`**. If it opens to setup instead of your plan (for example, the folder moved), choose **Open my data file** and pick the file you just downloaded.
 
 ## Cost
 
-Eat At Home is free. Claude is billed by Anthropic to your API account, prepaid on the Claude Console's Billing page and separate from any claude.ai subscription. Planning a week is one request of a few thousand tokens; see [Anthropic's pricing](https://platform.claude.com/docs/en/about-claude/pricing).
+Eat At Home is free. Claude is billed by Anthropic to your API account, prepaid on the Claude Console's Billing page and separate from any claude.ai subscription. Planning a week is one request of a few thousand tokens; see [Anthropic's pricing](https://platform.claude.com/docs/en/about-claude/pricing). In our testing, each Generate or Regenerate cost about 2–3 cents.
 
 ## Keep your key private
 
