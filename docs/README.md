@@ -123,7 +123,7 @@ The last 50 steps are kept until you reload the page. Opening a data file, Start
 
 ## Browser support
 
-- **Safari** (primary), Chrome, Edge and Firefox all work the same way: the data lives in the browser, with Open and Download for files.
+- **Safari** (primary) and **Chrome** are the browsers it's tested in, and they work the same way: the data lives in the browser, with Open and Download for files.
 
 Open it from disk (`file://`). Fonts load from Google Fonts when you're online and fall back to system fonts offline.
 
