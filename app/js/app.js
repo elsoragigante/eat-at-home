@@ -86,6 +86,8 @@ const A={
     mutateWeek(S.weekId,w=>{w.days.forEach(d=>{if(d.lunch&&d.lunch.kind==='prep')d.lunch={kind:'auto'};});w.lunchPrep=days.length?{name:pick.name,dishId:pick.dishId||null,days}:null;days.forEach(i=>{w.days[i].lunch={kind:'prep',label:pick.name,src:'Sunday lunch prep'};});});},
   themeMenu:el=>openPop(el,'theme',{}),
   theme:el=>setTheme(el.dataset.id),
+  help:()=>E.openHelp(),
+  helpGo:el=>E.helpGo(el),
   fridge:()=>{closePop();S.modal={type:'fridge',err:''};renderModal(true);},
   printSheet:()=>{const w=getWeek(S.weekId);document.getElementById('print-area').innerHTML=sheetBody(w);window.print();},
   modalClose:()=>closeModal(),

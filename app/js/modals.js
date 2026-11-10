@@ -124,6 +124,9 @@ function renderModal(first){
     const h=mealHtml(m);if(!h){S.modal=null;renderModal();return;}
     modalLayer.innerHTML=h;
     if(first){const b=document.getElementById('meal-x');b&&b.focus();}
+  }else if(m.type==='help'){
+    modalLayer.innerHTML=E.helpHtml();
+    if(first){const b=document.getElementById('help-x');b&&b.focus();}
   }else if(m.type==='fridge'){
     const w=getWeek(S.weekId);
     modalLayer.innerHTML=`<div class="modal wide sheet-modal" role="dialog" aria-modal="true" aria-labelledby="mh"><div class="modal-h"><h2 id="mh">Fridge sheet</h2><button class="ibtn" data-act="modalClose" aria-label="Close">${I.x}</button></div>
@@ -136,6 +139,7 @@ function closeModal(){const m=S.modal;S.modal=null;
   // The dish form opened from a meal's details goes back to them (Cancel, ×, Esc, Save).
   if(m&&m.back&&!m.noBack){S.modal=m.back;renderModal(true);return;}
   renderModal();if(m&&m.type==='confirm'&&!m.done&&m.onNo)m.onNo();
+  if(m&&m.type==='help'){const b=document.getElementById('help-btn');b&&b.focus({preventScroll:true});}
   if(m&&m.type==='meal'&&S.view==='plan'&&S.weekId===m.week){const c=document.getElementById('mo-'+m.i);c&&c.focus({preventScroll:true});}}
 
 /* ---------- meal details (a planned dinner) ----------

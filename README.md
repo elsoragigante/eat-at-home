@@ -46,7 +46,7 @@ Your key lives only in `app/config.js` on your computer. It is never put in your
 
 ## More
 
-The [user guide](docs/README.md) covers the Plan page, the fridge sheet, leftovers nights, recipes, dish variations, undo and how it's built.
+Inside the app, the **?** button (top right) opens the help. The [user guide](docs/README.md) covers the Plan page, the fridge sheet, leftovers nights, recipes, dish variations, undo and how it's built.
 
 ## License
 

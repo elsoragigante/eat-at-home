@@ -1,6 +1,6 @@
 # Eat At Home: user guide
 
-New here? Start with the [README](../README.md) for setup. This guide covers everything else.
+New here? Start with the [README](../README.md) for setup. This guide covers everything else. Inside the app, the **?** button (top right) opens the same help, and it works offline.
 
 Plan the family's week of home-cooked meals: dinner drives the week, leftovers become lunch on purpose, and the plan learns what everyone likes.
 
