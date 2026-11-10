@@ -1,0 +1,23 @@
+# Your Claude key: never commit it.
+app/config.js
+.env
+.env.*
+
+# Your data files (keep only the README).
+data/*
+!data/README.md
+backups/
+
+# Local tooling and machine files.
+.claude/
+.DS_Store
+Thumbs.db
+
+# Test output and screenshots.
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.log
+test-output/
+screenshots/
