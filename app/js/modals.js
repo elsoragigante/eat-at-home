@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 const E=window.EAH;
-const {RATE,EFFORTS,DOWL,I,esc,uid,clone,addDays,fmtDate,fmtRange,S,modalLayer,toast,dishList,r,cuisineList,cookbookList,sourcesOf,kitList,labelsOf,allLabels,canonLabel,snap,disp,bk,getWeek,mutateWeek,saveSettings,saveDish,resolveLunch,render,daysText,changed,people,cook,cookOnlyLunch,breakfastPeople,weekShape,exampleName,variationsOf,cleanVarName,dinnerVariation,dinnerTitle,MAX_VARIATIONS,VARIATION_MAX,RATE_LABEL}=E;
+const {RATE,EFFORTS,DOW,DOWL,I,esc,uid,clone,addDays,fmtDate,fmtRange,S,modalLayer,toast,dishList,r,cuisineList,cookbookList,sourcesOf,kitList,labelsOf,allLabels,canonLabel,snap,disp,bk,getWeek,mutateWeek,saveSettings,saveDish,resolveLunch,render,daysText,changed,people,cook,cookOnlyLunch,breakfastPeople,weekShape,exampleName,variationsOf,cleanVarName,dinnerVariation,dinnerTitle,MAX_VARIATIONS,VARIATION_MAX,RATE_LABEL}=E;
 /* ---------- modal: dish form ---------- */
 // Recipe: where each recipe lives (a cookbook and page/section, a meal kit, or a web link). Pointers, never recipes.
 // The draft keeps one row per recipe; each row remembers what was typed under every kind until save.
@@ -130,7 +130,7 @@ function renderModal(first){
   }else if(m.type==='fridge'){
     const w=getWeek(S.weekId);
     modalLayer.innerHTML=`<div class="modal wide sheet-modal" role="dialog" aria-modal="true" aria-labelledby="mh"><div class="modal-h"><h2 id="mh">Fridge sheet</h2><button class="ibtn" data-act="modalClose" aria-label="Close">${I.x}</button></div>
-    <div class="modal-b"><p class="muted" style="margin:0">One landscape page in black and white, with room under each dinner to write.</p><div class="sheet-wrap">${sheetBody(w)}</div>${m.err?`<p class="err" role="alert">${esc(m.err)}</p>`:''}</div>
+    <div class="modal-b"><p class="muted" style="margin:0">One landscape page in black and white, with room in each dinner to write.</p><div class="sheet-wrap">${sheetBody(w)}</div>${m.err?`<p class="err" role="alert">${esc(m.err)}</p>`:''}</div>
     <div class="modal-f"><span></span><div class="r"><button class="btn-ghost" data-act="modalClose">Close</button><button class="btn-primary" data-act="printSheet">Print</button></div></div></div>`;
     if(first){const b=modalLayer.querySelector('.btn-primary,.ibtn');b&&b.focus();}
   }
@@ -283,7 +283,8 @@ function mergeDo(){const m=S.modal;if(!m||m.type!=='merge'||!m.toId)return;
 /* ---------- fridge sheet ----------
    One landscape page, read at a glance from across the kitchen: per day, what lunch is and tonight's
    dinner (name, cook time and "start by", where the recipe is), with blank space under each dinner for
-   handwritten notes. Breakfasts and lunch prep go in small bullets underneath. Nothing else. */
+   handwritten notes. Breakfasts and lunch prep go in small bullets underneath, with last week's cooked
+   dinners in small gray type beside them (for "is that still good?"). Nothing else. */
 // Cook time in minutes from a dish's effort ("45 min", "1.5 hr", "2+ hr" = 2 hours), or null (slow cooker etc.).
 function effortMinutes(e){const m=/^(\d+(?:\.\d+)?)\+?\s*(min|hr)\b/i.exec(String(e||'').trim());if(!m)return null;return Math.round(Number(m[1])*(m[2].toLowerCase()==='hr'?60:1));}
 // settings.cooking.dinnerTime ("18:00", from a time input) in minutes after midnight, or null when not set.
@@ -301,15 +302,23 @@ function sheetRows(w){
     const lunch=d.away||L.kind==='out'?'Out':L.kind==='prep'?'Lunch prep: '+L.label:(L.label||'');
     return {day:DOWL[i],date:fmtDate(addDays(w.id,i)),lunch,din};});
 }
+// Last week's dinners cooked at home, in day order: [{day:"Thu Nov 5", name}]. Skips leftovers nights,
+// eating out, away days, empty days and dinners marked Out in History. Only a saved week counts.
+function lastWeekDinners(w){
+  const pid=addDays(w.id,-7);const p=S.weeks[pid];if(!p||!p.days)return [];
+  return p.days.map((d,i)=>{const dn=d.dinner;
+    if(d.away||!dn||dn.kind!=='dish'||!dn.dish||(d.eaten||{}).d==='out')return null;
+    return {day:DOW[i]+' '+fmtDate(addDays(pid,i)),name:dinnerTitle(dn)};}).filter(Boolean);
+}
 function sheetBody(w){
-  const rows=sheetRows(w);const lp=w.lunchPrep;const b=bk(w);const c=cook();
+  const rows=sheetRows(w);const last=lastWeekDinners(w);const lp=w.lunchPrep;const b=bk(w);const c=cook();
   const items=[];breakfastPeople().forEach(p=>{if(b[p.id])items.push(`<li><b>${c&&p.id===c.id?'My breakfast':esc(p.name)+'’s breakfast'}:</b> ${esc(b[p.id])}</li>`);});
   if(lp)items.push(`<li><b>Sunday lunch prep:</b> ${esc(lp.name)} (${esc(daysText(lp.days))})</li>`);
   return `<div class="sheet"><div class="sh-head"><div class="sh-title">Week of ${esc(fmtRange(w.id))}</div><div class="sh-app">Eat At Home</div></div>
   <div class="sh-grid"><div class="sh-c sh-lab"></div>${rows.map(r=>`<div class="sh-c sh-day">${esc(r.day)}<span>${esc(r.date)}</span></div>`).join('')}
   <div class="sh-c sh-lab">Lunch</div>${rows.map(r=>`<div class="sh-c sh-lunch">${esc(r.lunch)}</div>`).join('')}
   <div class="sh-c sh-lab">Dinner</div>${rows.map(r=>`<div class="sh-c sh-din${r.din.dish?'':' sh-plain'}">${r.din.name?`<div class="sh-name">${esc(r.din.name)}</div>`:''}${r.din.time?`<div class="sh-time">${esc(r.din.time)}</div>`:''}${r.din.src?`<div class="sh-src">${esc(r.din.src)}</div>`:''}${r.din.note?`<div class="sh-time">${esc(r.din.note)}</div>`:''}</div>`).join('')}</div>
-  ${items.length?`<ul class="sh-notes">${items.join('')}</ul>`:''}</div>`;
+  ${items.length||last.length?`<div class="sh-foot">${items.length?`<ul class="sh-notes">${items.join('')}</ul>`:'<span></span>'}${last.length?`<div class="sh-last"><div class="sh-last-h">Last week</div>${last.map(x=>`<div class="sh-last-i">${esc(x.day)} · ${esc(x.name)}</div>`).join('')}</div>`:''}</div>`:''}</div>`;
 }
-Object.assign(E,{variationsField,draftVariations,openMerge,mergeItems,mergeInfo,mergeHtml,mergeRefresh,mergeDo,SRC_KINDS,srcRow,recipeRow,addPendingBook,recipeField,normalizeUrl,draftSources,openDishForm,renderModal,closeModal,confirmBox,addPendingLabels,renderLists,eachWeekSkip,renameIn,listSave,saveDishForm,effortMinutes,dinnerMinutes,clockText,timeLine,sheetRows,sheetBody,openMeal,mealHtml,mealEdit});
+Object.assign(E,{variationsField,draftVariations,openMerge,mergeItems,mergeInfo,mergeHtml,mergeRefresh,mergeDo,SRC_KINDS,srcRow,recipeRow,addPendingBook,recipeField,normalizeUrl,draftSources,openDishForm,renderModal,closeModal,confirmBox,addPendingLabels,renderLists,eachWeekSkip,renameIn,listSave,saveDishForm,effortMinutes,dinnerMinutes,clockText,timeLine,sheetRows,lastWeekDinners,sheetBody,openMeal,mealHtml,mealEdit});
 })();

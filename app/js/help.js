@@ -100,8 +100,9 @@ const SECTIONS=[
 <p><b>Print</b> (top right) shows the week as it will print: one landscape page in black and white, made to be read from across the kitchen. Click <b>Print</b> in the preview to print it.</p>
 <ul>
 <li>One column per day, with a <b>Lunch</b> row and a <b>Dinner</b> row.</li>
-<li>Each dinner shows its name, cook time (and start time, if you set a dinner time) and where the recipe lives, with blank space underneath for notes.</li>
+<li>Each dinner shows its name, cook time (and start time, if you set a dinner time) and where the recipe lives. The Dinner row is about 2 inches tall, so short names leave blank space for notes.</li>
 <li>Breakfasts and Sunday lunch prep are small lines at the bottom.</li>
+<li><b>Last week</b>, in small gray type at the bottom right, lists the dinners you cooked the week before, one per line (“Thu Nov 5 · Spaghetti &amp; meat sauce”), so you can tell how old something in the fridge is. Leftovers nights, nights out and dinners marked <b>Out</b> in History are left off; if there’s nothing to list, it’s not printed.</li>
 </ul>
 <p>If the gray cells print white, turn on <b>Print backgrounds</b> in the print dialog (Safari: click <b>Show Details</b>; Chrome: <b>More settings → Background graphics</b>).</p>`],
 

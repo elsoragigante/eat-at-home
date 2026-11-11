@@ -39,8 +39,10 @@ The Plan page opens on this week (weeks start Sunday). The arrows move a week at
 - Lunch is just what lunch is: "Steak tacos", "Eat up the leftovers", "Lunch prep: …", or "Out".
 - Dinner is the meal's name (a picked version's name, if there is one), its cook time, and the same short recipe line as the Plan card ("Family Cookbook · 150", "Meal kit", "Internet recipe"). Leftovers nights and nights out just say so.
 - If you set a **Dinner time** (Family → Cooking), each dinner also says when to start: "1 hr · start by 5:00" for a 6:00 dinner ("2+ hr" counts as 2 hours; slow cooker and Instant Pot have no start time). Leave it empty for just the cook time. It's used only on the sheet; the planner never sees it.
-- Under each dinner there's about 1.5 inches of blank space for notes, swaps or a gold star.
-- Breakfasts and Sunday lunch prep are small bullets underneath. Nothing else is printed: no cuisines, labels, ratings, recipe labels, kit details, week notes or other ideas.
+- The Dinner row is at least about 2 inches tall, so short names leave blank space for notes, swaps or a gold star. Long names make it taller.
+- Breakfasts and Sunday lunch prep are small bullets underneath.
+- **Last week**, in small gray type beside those bullets, lists the dinners cooked the week before, one line each in day order ("Thu Nov 5 · Spaghetti & meat sauce", with the version's name if one was picked), so you can tell how old something in the fridge is. Leftovers nights, nights out, away days, empty days and dinners marked Out in History are left off. If there's nothing to list (or no last week), it isn't printed.
+- Nothing else is printed: no cuisines, labels, ratings, recipe labels, kit details, week notes or other ideas.
 
 ## Leftovers nights
 
